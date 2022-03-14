@@ -105,12 +105,10 @@
 		1716F44F27D6480800424DB9 /* PierreTestLBC */ = {
 			isa = PBXGroup;
 			children = (
+				17DFAE8D27DF53E000B9E443 /* Controller */,
 				17DFAE8A27DE21C400B9E443 /* Service */,
 				17DFAE8627DCD67400B9E443 /* Model */,
 				1716F45027D6480800424DB9 /* AppDelegate.swift */,
-				1716F48527D64EDE00424DB9 /* DetailsViewController.swift */,
-				1716F45427D6480800424DB9 /* MainViewController.swift */,
-				1716F48327D64E2800424DB9 /* MainNavigationController.swift */,
 				1716F45C27D6480A00424DB9 /* Assets.xcassets */,
 				1716F45E27D6480A00424DB9 /* LaunchScreen.storyboard */,
 				1716F46127D6480A00424DB9 /* Info.plist */,
@@ -150,6 +148,16 @@
 				17DFAE8B27DE21E000B9E443 /* Service.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		17DFAE8D27DF53E000B9E443 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1716F48327D64E2800424DB9 /* MainNavigationController.swift */,
+				1716F48527D64EDE00424DB9 /* DetailsViewController.swift */,
+				1716F45427D6480800424DB9 /* MainViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
