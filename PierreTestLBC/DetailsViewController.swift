@@ -56,6 +56,14 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
+    let dateLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.sizeToFit()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     let itemImage : UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
@@ -112,6 +120,7 @@ class DetailsViewController: UIViewController {
         contentView.addSubview(priceLabel)
         contentView.addSubview(categoryLabel)
         contentView.addSubview(itemImage)
+        contentView.addSubview(dateLabel)
         setupContentLabels()
         
         itemImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
@@ -122,9 +131,13 @@ class DetailsViewController: UIViewController {
         titleLabel.topAnchor.constraint(equalTo: itemImage.bottomAnchor, constant: 10).isActive = true
         titleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4).isActive = true
         
+        dateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
+        dateLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 9/10).isActive = true
+        dateLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
         
         categoryLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        categoryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
+        categoryLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10).isActive = true
         categoryLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 9/10).isActive = true
         categoryLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
@@ -145,6 +158,9 @@ class DetailsViewController: UIViewController {
         categoryLabel.text = category
         categoryLabel.font = .italicSystemFont(ofSize: 15)
         descriptionLabel.text = item.description
+        dateLabel.text = item.creation_date
+        dateLabel.font = .italicSystemFont(ofSize: 15)
+        dateLabel.textColor = .gray
         
         if let price = item.price {
             priceLabel.text =  String(describing: price) + "€"
