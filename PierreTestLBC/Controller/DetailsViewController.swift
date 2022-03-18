@@ -158,7 +158,7 @@ class DetailsViewController: UIViewController {
         categoryLabel.text = category
         categoryLabel.font = .italicSystemFont(ofSize: 15)
         descriptionLabel.text = item.description
-        dateLabel.text = item.creation_date
+        setupDateLabelFormat()
         dateLabel.font = .italicSystemFont(ofSize: 15)
         dateLabel.textColor = .gray
         
@@ -169,6 +169,26 @@ class DetailsViewController: UIViewController {
         }
         
         priceLabel.font = .boldSystemFont(ofSize: 20)
+    }
+    
+    private func setupDateLabelFormat() {
+        guard let creation_date = item.creation_date else {
+            return
+        }
+        
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MM-dd-yyyy HH:mm"
+        
+        if let date = dateFormatterGet.date(from: creation_date) {
+            let formattedDate = dateFormatterPrint.string(from: date)
+            dateLabel.text = formattedDate
+        } else {
+            print("There was an error decoding the string")
+            return
+        }
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
