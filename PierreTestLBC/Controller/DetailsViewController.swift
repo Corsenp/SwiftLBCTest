@@ -76,13 +76,23 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
+        guard let id = item.id else {
+            return
+        }
         if let url = item.images_url.small {
-            downloadImage(from: URL(string: url)!)
+            setupImage(url: url, id: String(id))
         }
         
         setupScrollView()
         setupViews()
+    }
+    
+    private func setupImage(url: String, id: String) {
+        ImageFetcher.shared.fetchImage(url: url, id: id) { [weak self] image in
+            DispatchQueue.main.async() { [weak self] in
+                self?.itemImage.image = image
+            }
+        }
     }
     
     func setupScrollView(){
@@ -188,19 +198,6 @@ class DetailsViewController: UIViewController {
         } else {
             print("There was an error decoding the string")
             return
-        }
-    }
-    
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-    
-    func downloadImage(from url: URL) {
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() { [weak self] in
-                self?.itemImage.image = UIImage(data: data)
-            }
         }
     }
 }
