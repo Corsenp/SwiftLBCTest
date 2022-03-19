@@ -40,6 +40,14 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
+    let siretLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.sizeToFit()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     let priceLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -131,6 +139,7 @@ class DetailsViewController: UIViewController {
         contentView.addSubview(categoryLabel)
         contentView.addSubview(itemImage)
         contentView.addSubview(dateLabel)
+        contentView.addSubview(siretLabel)
         setupContentLabels()
         
         itemImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
@@ -154,13 +163,20 @@ class DetailsViewController: UIViewController {
         priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         
         descriptionLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 10).isActive = true
-        descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30).isActive = true
         descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
         descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+        
+        siretLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        siretLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 10).isActive = true
+        siretLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30).isActive = true
     }
     
     private func setupContentLabels() {
         titleLabel.text = item.title
+        if let urgent = item.is_urgent, let text = titleLabel.text, urgent {
+            titleLabel.text = "Urgent: " + text
+            titleLabel.textColor = .red
+        }
         titleLabel.font = .boldSystemFont(ofSize: 20)
         categoryLabel.text = category
         categoryLabel.textColor = UIColor(red: 0.93, green: 0.46, blue: 0.20, alpha: 1.00)
@@ -169,11 +185,19 @@ class DetailsViewController: UIViewController {
         setupDateLabelFormat()
         dateLabel.textColor = .gray
         
+        if let siret = item.siret {
+            siretLabel.text = "Siret: " + siret
+        }
+        
+        siretLabel.textColor = .gray
+        siretLabel.font = .italicSystemFont(ofSize: 15)
+        
         if let price = item.price {
             priceLabel.text =  String(describing: price) + "€"
         } else {
             priceLabel.text = "No Price Yet"
         }
+        
         
         priceLabel.font = .boldSystemFont(ofSize: 20)
     }
