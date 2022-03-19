@@ -79,7 +79,7 @@ class DetailsViewController: UIViewController {
         guard let id = item.id else {
             return
         }
-        if let url = item.images_url.small {
+        if let url = item.images_url.thumb {
             setupImage(url: url, id: String(id))
         }
         
@@ -133,43 +133,40 @@ class DetailsViewController: UIViewController {
         contentView.addSubview(dateLabel)
         setupContentLabels()
         
-        itemImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        itemImage.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        itemImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4).isActive = true
+        itemImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        itemImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        itemImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         
-        titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         titleLabel.topAnchor.constraint(equalTo: itemImage.bottomAnchor, constant: 10).isActive = true
-        titleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         
-        dateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
-        dateLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 9/10).isActive = true
-        dateLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
+        dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
+        dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         
-        categoryLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         categoryLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10).isActive = true
-        categoryLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 9/10).isActive = true
-        categoryLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        categoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
+        categoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         
-        priceLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         priceLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 10).isActive = true
-        priceLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 9/10).isActive = true
-        priceLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        priceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
+        priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         
-        descriptionLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         descriptionLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 10).isActive = true
-        descriptionLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 9/10).isActive = true
-        descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30).isActive = true
+        descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
+        descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
     }
     
     private func setupContentLabels() {
         titleLabel.text = item.title
         titleLabel.font = .boldSystemFont(ofSize: 20)
         categoryLabel.text = category
-        categoryLabel.font = .italicSystemFont(ofSize: 15)
+        categoryLabel.textColor = UIColor(red: 0.93, green: 0.46, blue: 0.20, alpha: 1.00)
+        categoryLabel.font = .boldSystemFont(ofSize: 20)
         descriptionLabel.text = item.description
         setupDateLabelFormat()
-        dateLabel.font = .italicSystemFont(ofSize: 15)
         dateLabel.textColor = .gray
         
         if let price = item.price {
