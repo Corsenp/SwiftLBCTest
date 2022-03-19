@@ -37,6 +37,7 @@ class MainViewController: UIViewController {
         let categoryUrl = url + "categories.json"
         apiCaller.fetchItemData(url: listingUrl) { [weak self] result in
             self?.data = result
+            self?.filterTable()
             DispatchQueue.main.async {
                 self?.itemTableView.reloadData()
             }
@@ -44,6 +45,16 @@ class MainViewController: UIViewController {
 
         apiCaller.fetchCategoryData(url: categoryUrl) { [weak self] result in
             self?.categories = result
+        }
+    }
+    
+    private func filterTable() {
+        data.sort {
+            guard let creationDate0 = $0.creation_date, let creationDate1 = $1.creation_date else { return false }
+            return creationDate0 > creationDate1
+        }
+        DispatchQueue.main.async {
+            self.itemTableView.reloadData()
         }
     }
     
