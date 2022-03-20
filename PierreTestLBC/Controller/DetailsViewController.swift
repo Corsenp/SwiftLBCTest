@@ -88,15 +88,15 @@ class DetailsViewController: UIViewController {
             return
         }
         if let url = item.images_url.thumb {
-            setupImage(url: url, id: String(id))
+            setupImage(url: url, id: String(id), type: "thumb")
         }
         
         setupScrollView()
         setupViews()
     }
     
-    private func setupImage(url: String, id: String) {
-        ImageFetcher.shared.fetchImage(url: url, id: id) { [weak self] image in
+    private func setupImage(url: String, id: String, type: String) {
+        ImageFetcher.shared.fetchImage(url: url, id: id, type: type) { [weak self] image in
             DispatchQueue.main.async() { [weak self] in
                 self?.itemImage.image = image
             }

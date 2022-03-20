@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
     
     private let itemTableView: UITableView = {
         let itemTableView = UITableView(frame: .zero, style: .grouped)
-        itemTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        itemTableView.register(TableCell.self, forCellReuseIdentifier: TableCell.identifier)
         
         return itemTableView
     }()
@@ -67,19 +67,13 @@ extension MainViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableCell.identifier, for: indexPath) as? TableCell else { return UITableViewCell() }
         
-        content.text = data[indexPath.row].title
-        content.secondaryText = String(describing: data[indexPath.row].price!) + "€"
-        content.secondaryTextProperties.font = .boldSystemFont(ofSize: 20)
-        
-        if let urgent = data[indexPath.row].is_urgent, urgent {
-            content.textProperties.color = .red
-            content.secondaryTextProperties.color = .red
+        var category = ""
+        if let category_id = data[indexPath.row].category_id {
+            category = categories[category_id - 1].name
         }
-        
-        cell.contentConfiguration = content
+        cell.configure(item: data[indexPath.row], category: category)
         return cell
     }
     
