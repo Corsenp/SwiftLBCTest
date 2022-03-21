@@ -49,9 +49,15 @@ class MainViewController: UIViewController {
     }
     
     private func filterTable() {
+        
         data.sort {
             guard let creationDate0 = $0.creation_date, let creationDate1 = $1.creation_date else { return false }
             return creationDate0 > creationDate1
+        }
+        
+        data.sort {
+            guard let isUrgent0 = $0.is_urgent, let isUrgent1 = $1.is_urgent else { return false }
+            return isUrgent0 && !isUrgent1
         }
         DispatchQueue.main.async {
             self.itemTableView.reloadData()
