@@ -17,7 +17,6 @@ class ImageFetcher {
     
     public func fetchImage(url: String, id: String, type: String, completion: @escaping (UIImage?) -> Void) {
         if let image = cache.object(forKey: NSString(string: "DetailsImage + \(id) + \(type)")) {
-            print("Getting image from Cache")
             completion(image)
             return
         }
@@ -37,9 +36,7 @@ class ImageFetcher {
                     completion(nil)
                     return
                 }
-                print("Downloading Image")
-                self?.cache.setObject(image, forKey: NSString(string: "DetailsImage + \(id)+ \(type)"))
-                print("Setting up image in cache")
+                self?.cache.setObject(image, forKey: NSString(string: "DetailsImage + \(id) + \(type)"))
                 completion(image)
             }
         }

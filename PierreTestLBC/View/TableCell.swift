@@ -46,7 +46,6 @@ class TableCell : UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.heightAnchor.constraint(equalToConstant: 130).isActive = true
         setupContentView()
     }
     
