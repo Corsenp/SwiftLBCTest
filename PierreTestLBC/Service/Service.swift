@@ -7,23 +7,37 @@
 
 import Foundation
 
+enum ErrorNetwork: Error {
+    case cacheError
+    case urlError
+    case decodeError
+}
+
 class Service {
-    func fetchItemData(url: String, completion: @escaping ([Item]) -> Void) {
-        var json : [Item] = []
+    func fetchData<T: Decodable>(url: String, completion: @escaping ((Result<[T], ErrorNetwork>) -> Void)) {
         let task = URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: { data, response, error in
             guard let data = data, error == nil else {
                 return
             }
             
+    
             do {
-                json = try JSONDecoder().decode([Item].self, from: data)
-                completion(json)
+                let json = try JSONDecoder().decode([T].self, from: data)
+                completion(.success(json))
             } catch {
                 print(error.self)
                 print("failed to JSON DECODE \(error.localizedDescription)")
             }
         })
         task.resume()
+    }
+    
+    public func loadItems(url: String, completion: @escaping ((Result<[Item], ErrorNetwork>) -> Void)) {
+        fetchData(url: url, completion: completion)
+    }
+    
+    public func loadCategories(url: String, completion: @escaping ((Result<[Category], ErrorNetwork>) -> Void)) {
+        fetchData(url: url, completion: completion)
     }
     
     func fetchCategoryData(url: String, completion: @escaping ([Category]) -> Void) {

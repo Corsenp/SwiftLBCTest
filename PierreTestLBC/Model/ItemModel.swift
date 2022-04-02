@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Item: Identifiable, Codable {
+struct Item: Identifiable, Decodable {
     let id: Int?
     let category_id: Int?
     let title: String?

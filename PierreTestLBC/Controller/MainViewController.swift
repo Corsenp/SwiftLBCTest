@@ -34,16 +34,40 @@ class MainViewController: UIViewController {
         itemTableView.frame = view.bounds
         let listingUrl = url + "listing.json"
         let categoryUrl = url + "categories.json"
-        apiCaller.fetchItemData(url: listingUrl) { [weak self] result in
-            self?.data = result
-            self?.filterTable()
-            DispatchQueue.main.async {
-                self?.itemTableView.reloadData()
+        apiCaller.loadItems(url: listingUrl) { [weak self] result in
+            switch result {
+            case .success(let resultData):
+                print("SUCCESSFULL CALL")
+                self?.data = resultData
+                self?.filterTable()
+                DispatchQueue.main.async {
+                    self?.itemTableView.reloadData()
+                }
+            case .failure(.urlError):
+                print("URL ERROR")
+            case .failure(.cacheError):
+                print("Cache Error")
+            case .failure(.decodeError):
+                print("Json Decode Error")
             }
         }
-
-        apiCaller.fetchCategoryData(url: categoryUrl) { [weak self] result in
-            self?.categories = result
+        
+        apiCaller.loadCategories(url: categoryUrl) { [weak self] result in
+            switch result {
+            case .success(let resultData):
+                print("SUCCESSFULL CALL")
+                self?.categories = resultData
+                self?.filterTable()
+                DispatchQueue.main.async {
+                    self?.itemTableView.reloadData()
+                }
+            case .failure(.urlError):
+                print("URL ERROR")
+            case .failure(.cacheError):
+                print("Cache Error")
+            case .failure(.decodeError):
+                print("Json Decode Error")
+            }
         }
     }
     
